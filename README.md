@@ -1,3 +1,8 @@
+# Chatbot prototyping
+
+# suicidal-chatbot.github.io
+Project prototyping chatbot simulating a suicidal person seeking support
+
 # Chatty
 This project enables you to run or deploy your own ChatGPT-like application.
 
