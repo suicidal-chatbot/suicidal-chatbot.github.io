@@ -258,7 +258,7 @@
 	</div>
 </div>
 <!-- Conversation panel -->
-<div class="flex flex-col pt-4 pb-8 w-[600px] px-8 bg-white rounded-md my-8">
+<div class="flex flex-col pt-4 pb-8 w-[600px] h-[711px] px-8 bg-white rounded-md my-8">
 	<div class="flex flex-col pt-4 w-[400px] gap-2">
 		<h1 class="text-2xl font-bold w-full">Chat</h1>
 	</div>
@@ -284,10 +284,10 @@
 		<button type="submit" class="hidden btn bg-green-500"> Send </button>
 	</form>
 	<div class="flex flex-row gap-4 justify-center">
-	<button id="send_message" class="btn bg-red-500 w-[260px]" on:click={remove_previous}>
+	<button id="send_message" class="btn bg-red-500 w-[50%]" on:click={remove_previous}>
 		Remove previous
 	</button>
-	<button id="get_feedback" class="btn bg-blue-500 w-[260px]" on:click|preventDefault={() => f_handleSubmit()}>
+	<button id="get_feedback" class="btn bg-blue-500 w-[50%]" on:click|preventDefault={() => f_handleSubmit()}>
 		Get feedback
 	</button>
 	</div>
