@@ -5,17 +5,6 @@
 </script>
 
 <div class="chat {type === 'user' ? 'chat-end' : 'chat-start'} justify-end">
-	<div class="chat-image avatar">
-		<div class="w-10 rounded-full">
-			<img
-				src="https://ui-avatars.com/api/?name={type === 'user' ? 'Me' : 'P'}"
-				alt="{type} avatar"
-			/>
-		</div>
-	</div>
-	<div class="chat-header">
-		{type === 'user' ? 'Me' : 'Patient'}
-	</div>
 	<div class="chat-bubble {type === 'user' ? 'bg-green-600' : 'bg-blue-600'}">
 		{message}
 	</div>

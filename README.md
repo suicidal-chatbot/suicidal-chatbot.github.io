@@ -1,42 +1,56 @@
-# Chatbot prototyping
-
 # suicidal-chatbot.github.io
-Project prototyping chatbot simulating a suicidal person seeking support
 
-# Chatty
-This project enables you to run or deploy your own ChatGPT-like application.
+## Project description
 
-### How it works
-This app leverages [OpenAI](https://ai.com)'s recently released ChatGPT API with `gpt-3.5-turbo` model to respond to a chain of chat messages. Users submit messages to a [SvelteKit](https://kit.svelte.dev) API Endpoint/Request Handler, which relays the messages to the ChatGPT API. The responses are then proxied back to the client via SSE to stream the response in realtime.
+This project aims to prototype a chatbot that simulates a suicidal person seeking support.
 
-### Built with
-- Meta-Framework: [SvelteKit](https://kit.svelte.dev)
-- Styles/Components: [TailwindCSS](https://tailwindcss.com) & [DaisyUI](https://daisyui.com)
-- Deployment: [Vercel](https://vercel.com)
+## Versions
 
+### v1.0
 
-## Run Locally
+This version outlines the basic structure of the webapp, including the two chatbots (one for conversation, another for feedback) and some additional features.
 
-Clone the repository
-```sh
-git clone https://github.com/huntabyte/chatty
-```
+1. Added capability for two chatbots appear in one page (solved routing issue)
+2. Added feedback chatbot functionality
+3. Added textfield sync between two chatbots
+    Adding id for two textfields make this possible
+    After sending to chatbot, the textfield will be cleared, while getting feedback doesn't.
+4. (Implemented, not sure) Hide feedback chatbot text field
+5. Change names in conversation history to "Patient" and "Me"
+6. Add color coding for feedback message
+    Detect Yes and No and change the color of the bubble
 
-Create a .env file within the new directory
-```sh
-cd chatty && touch .env
-echo OPENAI_KEY=<YOUR_API_KEY_HERE> >> .env
-```
+### v1.1
 
-Install dependencies & start the dev server
-```sh
-pnpm i && pnpm run dev
-```
+This version added removing messages from conversation, a core functionality to facilitate training.
 
-You can now access the dev server running at [localhost:5173](https://localhost:5173)
+1. Implemented functionality to delete previous messages
 
-## Deploy to Vercel
+### v1.2
 
-Commit the repository to GitHub and select it when creating a new Vercel deployment.
+1. Overall visual improvements and removal of unecessary elements
 
-Don't forget to set the `OPENAI_KEY` environment variable within your Vercel project settings.
+### v1.3
+
+This version contains a number of major functionality and visual changes to improve user experience and expand scope of the web app.
+
+1. Loop through each criteria
+2. Associated issue: message mixing up
+3. Add a second starting message (same as hugging face)
+4. Change all prompts to be the same as chatbot 1 and 2 in the hugging face.
+5. Fill the interface in one page.
+6. Two sidebars should be smaller, allow collapsing
+7. And then have a separate button to delete previous 2 messages (last user and assistant messages)
+8. Remove delete pop up
+9. Remove user and patient heading, avatar for message
+10. Press enter to send message rather than send button
+11. Associated issue: communicate pressing enter to send
+12. Remove input suggestions/autofill (see if it’s a chrome feature)
+13. Change advice text / header to be the same as hugging face
+14. Change advice background (so it’s vertically aligned with the other sidebar / chatbot windows)
+15. Look into whether start messages is successfully implemented
+16. Add a toggle / accordion sidebar underneath the advice (left-hand) sidebar to show the system prompt and allow users to edit the system prompt.
+
+## How to use it
+
+## Acknowledgements
