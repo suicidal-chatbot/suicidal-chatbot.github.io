@@ -575,11 +575,7 @@
 				<button on:click={togglePrompt_menu}
 						>
 						<div class="flex flex-row">
-						<img
-							class="w-[30px]"
-							src="/src/images/menu_button.png"
-							alt="switch prompt menu"
-						/><h1 class="text-xl px-4 font-bold w-full">Switch prompt</h1></div></button
+						<h1 class="text-xl px-4 font-bold w-full">Switch prompt</h1></div></button
 					>
 				<div class={prompt_menu_active ? 'hidden' : ''}>
 					<div class="flex items-end flex-row my-4 px-4">
