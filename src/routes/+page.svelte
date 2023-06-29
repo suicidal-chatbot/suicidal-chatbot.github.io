@@ -577,7 +577,7 @@
 						<div class="flex flex-row">
 						<img
 							class="w-[30px]"
-							src="src/images/menu_button.png"
+							src="/src/images/menu_button.png"
 							alt="switch prompt menu"
 						/><h1 class="text-xl px-4 font-bold w-full">Switch prompt</h1></div></button
 					>
