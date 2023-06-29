@@ -4,6 +4,15 @@
 
 This project aims to prototype a chatbot that simulates a suicidal person seeking support.
 
+## How to use it
+
+Step 1 (Create .env file):
+Enter "cd chatty && touch .env"
+Enter "echo OPENAI_KEY=<YOUR_API_KEY_HERE> >> .env"
+
+Step 2 (Run locally):
+Enter "pnpm i && pnpm run dev"
+
 ## Versions
 
 ### v1.0
