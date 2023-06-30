@@ -279,6 +279,7 @@
 			content: 'Hi. I’ve had a tough time recently and I wanted to talk to someone about it.'
 		}
 	]
+	f_chatMessages = []
 	}
 
 </script>
@@ -429,8 +430,7 @@
 		</div>
 		</div>
 		<!-- Conversation panel -->
-		<div class={chat1_active ? 'hidden' : ''}>
-		<div class="flex flex-col pt-4 pb-8 w-[600px] h-[711px] px-8 bg-white rounded-md my-8">
+		<div class="{chat1_active ? 'hidden' : ''} flex flex-col pt-4 pb-8 w-[600px] h-[711px] px-8 bg-white rounded-md my-8">
 			<div class="h-[535px] w-full rounded-md p-4 overflow-y-auto flex flex-col gap-4">
 				<div class="flex flex-col gap-2">
 					{#each chatMessages as message, i}
@@ -470,12 +470,10 @@
 				>
 					Get feedback
 				</button>
-			</div>
 		</div>
 	</div>
 		<!-- Conversation Panel 2 -->
-		<div class={chat1_active ? '' : 'hidden'}>
-		<div class="flex flex-col pt-4 pb-8 w-[600px] h-[711px] px-8 bg-white rounded-md my-8">
+		<div class="flex flex-col pt-4 pb-8 w-[600px] h-[711px] px-8 bg-white rounded-md my-8 {chat1_active ? '' : 'hidden'}">
 			<div class="h-[535px] w-full rounded-md p-4 overflow-y-auto flex flex-col gap-4">
 				<div class="flex flex-col gap-2">
 					{#each chatMessages as message, i}
@@ -515,7 +513,6 @@
 				>
 					Get feedback
 				</button>
-			</div>
 		</div>
 	</div>
 		<!-- Feedback panel -->
@@ -575,6 +572,11 @@
 				<button on:click={togglePrompt_menu}
 						>
 						<div class="flex flex-row">
+							<img
+							class="w-[30px]"
+							src="/images/menu_button.png"
+							alt="switch prompt menu"
+						/>
 						<h1 class="text-xl px-4 font-bold w-full">Switch prompt</h1></div></button
 					>
 				<div class={prompt_menu_active ? 'hidden' : ''}>
