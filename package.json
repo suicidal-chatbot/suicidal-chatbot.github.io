@@ -42,8 +42,12 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/node": "^20.4.1",
+		"@vercel/postgres": "^0.4.0",
+		"googleapis": "^121.0.0",
 		"gpt3-tokenizer": "^1.1.5",
 		"openai": "^3.2.1",
-		"sse.js": "^0.6.1"
+		"sse.js": "^0.6.1",
+		"ts-node": "^10.9.1"
 	}
 }
