@@ -1,9 +1,18 @@
+<!-- This client-side code is for the home page.-->
+<!-- It is responsible for the user interface and connects the UI to the serverside codes.-->
+
+<!-- Section 1: Functions-->
+<!-- This section contains codes for request handling, data processing, and interface interactivities -->
 <script lang="ts">
-	// This is the code for the first chatbot.
+	import { page } from '$app/stores'
+
+	// Part 0: Importing dependencies
 
 	import ChatMessage from '$lib/components/ChatMessage.svelte'
 	import FeedbackMessage from '$lib/components/FeedbackMessage.svelte'
+	// Improting openai API package
 	import type { ChatCompletionRequestMessage } from 'openai'
+	// Improting serverside events package
 	import { SSE } from 'sse.js'
 
 
@@ -11,6 +20,8 @@
 	let query: string = ''
 	let answer: string = ''
 	let loading: boolean = false
+	// [Edit] Setting up initial messages
+	// System prompt is set up in src/routes/api/chat/+server.ts
 	let chatMessages: ChatCompletionRequestMessage[] = [
 		{ role: 'user', content: 'Hi. What do you want to talk about?' },
 		{
@@ -18,19 +29,22 @@
 			content: 'Hi. I’ve had a tough time recently and I wanted to talk to someone about it.'
 		}
 	]
-	let scrollToDiv_chat1: HTMLDivElement
 
+	// Enabling auto-scorlling to bottom when new chat message appears
+	let scrollToDiv_chat1: HTMLDivElement
 	function scrollToBottom_chat1() {
 		setTimeout(function () {
 			scrollToDiv_chat1.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
 		}, 1)
 	}
 
-	// Chatbot 1 conversation code
+	// Chatbot new message request handling
+	// The server side code of this functionality is located in src/routes/api/chat/+server.ts
 	const handleSubmit = async () => {
 		loading = true
 		chatMessages = [...chatMessages, { role: 'user', content: query }]
 
+		// This code creates a new EventSource object: It sets up an SSE connection and send data "chatMessages" to the server
 		const eventSource = new SSE('/api/chat', {
 			headers: {
 				'Content-Type': 'application/json'
@@ -42,6 +56,7 @@
 
 		eventSource.addEventListener('error', handleError)
 
+		// Setting up an event listener: When a message event happens, the new message is added to the chatMessages object
 		eventSource.addEventListener('message', (e) => {
 			scrollToBottom_chat1()
 			try {
@@ -70,20 +85,23 @@
 	let f_answer: string = ''
 	let f_loading: boolean = false
 	let f_chatMessages: ChatCompletionRequestMessage[] = []
-	let scrollToDiv_feedback: HTMLDivElement
 
+	// Enabling auto-scorlling to bottom when new feedback message appears
+	let scrollToDiv_feedback: HTMLDivElement
 	function scrollToBottom_feedback() {
 		setTimeout(function () {
 			scrollToDiv_feedback.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
 		}, 1)
 	}
 
-	// Construct chat history from chatMessages object
-
+	// This function constructs chat history from chatMessages object, which is sent to the feedback chatbot
+	// It is also used for uploading chat history to the spreadsheet
 	function construct_chat_history(chatMessages: ChatCompletionRequestMessage[]) {
 		let history = ''
+		// This for loop goes through each message in a chatMessages object
 		for (let i in chatMessages) {
 			let role = ''
+			// [Edit] Put in role information
 			if (chatMessages[i].role == 'user') {
 				role = 'Me'
 			} else {
@@ -95,6 +113,7 @@
 		return history
 	}
 
+	// [Edit] A list of criterias for the feedback chatbot to evaluate user message
 	const criterias = [
 		`1. Acknowledge and validate their feelings: Let the person know that it's okay to be struggling and that you understand what they are going through. Example: "I'm sorry to hear that" or "It sounds like what you're experiencing is really difficult"`,
 		`2. Ask open-ended questions: Ask the person questions that encourage them to open up about their feelings. Example: "Can you tell me more about what you're feeling?"`,
@@ -103,10 +122,14 @@
 		`5. Encourage them to connect with resources: Once the person has said they're suicidal or want to kill themself, you should ask that they get help from a mental health professional or support group. Example: "Would you be open to reaching out to someone who can help you more, like a suicide hotline?"`
 	]
 
+	// Feedback chatbot new feedback request handling
+	// The server side code of this functionality is located in src/routes/api/feedback/+server.ts
 	const f_handleSubmit = async () => {
 		f_loading = true
 		let next_message = query
 
+		// [Edit] This code builds the text message sent to the Feedback chatbot
+		// It uses the current chat message and the unsent message in the textfield
 		for (let i = 0; i < 5; i++) {
 			query = `The following is a ongoing conversation between me and my friend: ${construct_chat_history(
 				chatMessages
@@ -119,6 +142,7 @@
 		`
 			f_chatMessages = [...f_chatMessages, { role: 'user', content: query }]
 
+			// Creating another new EventSource object.
 			const eventSource = new SSE('/api/feedback', {
 				headers: {
 					'Content-Type': 'application/json'
@@ -130,6 +154,7 @@
 
 			eventSource.addEventListener('error', f_handleError)
 
+			// Setting up an event listener
 			eventSource.addEventListener('message', (e) => {
 				scrollToBottom_feedback()
 				try {
@@ -153,6 +178,7 @@
 			eventSource.stream()
 			scrollToBottom_feedback()
 
+			// [Edit] This code set up a pause between each feedback messages so that the feedback could be presented one by one
 			await new Promise((resolve) => setTimeout(resolve, 5000))
 		}
 	}
@@ -171,16 +197,16 @@
 		console.error(err)
 	}
 
-	// Part 3 Add-on functionality code
+	// Part 3 Add-on functionalities code
 
-	// Remove previous message functionality
+	// Add-on 1: Remove previous message functionality
 	let deleted_index: number[] = []
 
 	function remove_previous() {
 		chatMessages = chatMessages.slice(0, -2)
 	}
 
-	// Toggle between showing and hiding the hint sidebar
+	// Add-on 2: Toggle between showing and hiding the "Advice on what to say" sidebar
 	let hint_active = false
 	let hint_panel_width = '100%'
 	let button_class = 'flex flex-col p-8 bg-white rounded-md gap-2'
@@ -190,7 +216,7 @@
 		hint_panel_width = hint_active ? '100%' : '0px'
 	}
 
-	// Toggle between showing and hiding the feedback sidebar
+	// Add-on 3: Toggle between showing and hiding the feedback sidebar
 	let feedback_active = false
 	let feedback_panel_width = '100%'
 
@@ -199,7 +225,7 @@
 		feedback_panel_width = feedback_active ? '100%' : '0px'
 	}
 
-	// Toggle between showing and hiding the system prompt sidebar
+	// Add-on 4: Toggle between showing and hiding the system prompt sidebar
 	let prompt_active = false
 	let prompt_panel_width = '100%'
 
@@ -208,7 +234,7 @@
 		prompt_panel_width = prompt_active ? '100%' : '0px'
 	}
 
-	// Allowing pressing enter to submit form
+	// Add-on 5: Allowing pressing enter to send chat message to chatbot
 	function chat1_enter_submit(event: KeyboardEvent) {
 		if (event.key === 'Enter' && !event.shiftKey) {
 			event.preventDefault()
@@ -216,7 +242,8 @@
 		}
 	}
 
-	// Hamburger menu to switch prompt
+	// Add-on 6: Hamburger menu to switch prompt
+	// The hamburger menu for switching prompts was removed
 	let prompt_menu_active = false
 	let prompt_menu_width = '100%'
 
@@ -225,7 +252,8 @@
 		prompt_menu_width = prompt_menu_active ? '100%' : '0px'
 	}
 
-	// Functions to show/hide chat interface 1
+	// Add-on 7: Functions to show/hide chatbot with prompt 1
+	// The functionality of switching between chatbot prompts was removed
 	let chat1_active = false
 
 	function toggleChat1() {
@@ -240,13 +268,26 @@
 		f_chatMessages = []
 	}
 
-	// Google spreasheet code
+	// Add-on 8: Google spreasheet code
 	let message = "";
   	let role = "";
 
+	// Sending chat history to a google spreadsheet
+	// The server side code of this functionality is located in src/routes/api/spreadsheet/+server.ts
   async function sendMessage() {
+	// This records the time and date of the chat hisotry uploading
 	role = Date().toLocaleString()
 	message = construct_chat_history(chatMessages)
+	message = `System: You are a 35 year-old woman who lives in the US (although if someone asks, you won’t say where).
+		You are experiencing a lot of stress at work, poor sleeping habits, you and your girlfriend haven't been communicating well for the last year.
+		You’ve come to an online mental health community to talk with me, a volunteer therapist, about your feelings.
+		You're a teacher. You changed jobs within the last year. This one is much more stressful and you don't really know what you're doing.
+		When you were in high school, you used to stay up and work late. Your sleep is like that again.
+		Your girlfriend and you have been fighting a lot recently. You’re not sure if it’s just normal to fight like this — your parents used to do this when you were a kid. But, it just gets overwhelming sometimes and you can’t really figure out whether you’re right or wrong. You’ve been living together for the past three years and you keep fighting about keeping your apartment clean. 
+		You have been feeling kind of worthless and depressed for a couple of months. You’ve also been feeling suicidal lately: you’ve had thoughts of not wanting to live and you’ve had quick thoughts about ways of dying, but you can’t control them. You wouldn't actually do anything.
+		You're not able to fully articulate your feelings. But you’ve come to me to talk more about why. You should start with ‘I don't know’ if someone asks you specifically how you're feeling.
+		You should respond in short sentences most of the time. You shouldn't say you're depressed or suicidal immediately in the conversation. After your 4th message, once a level of comfort has been established, you should say that you "feel like you don’t want to exist." 
+		You're reluctant to talk about your feelings. One time you told your girlfriend you felt like wanting to die and she kind of freaked out. You need to feel comfortable in the conversation before you share anything about feeling like not wanting to die. You need to talk about it before ending the conversation, though.\n` + message
     const requestData = { role, message };
 
     const response = await fetch("/api/spreadsheets", {
@@ -261,7 +302,9 @@
     console.log(responseData);
   }
 </script>
+<!-- Section 1 Ends -->
 
+<!-- Section 2: User Interface -->
 <body class="background">
 	<!-- Experimental spreasheet code -->
 	<div class="flex flex-col lg:flex-row w-[100%] justify-center my-8">
@@ -460,7 +503,9 @@
 				</div>
 	</div></body
 >
+<!-- Section 2 ends -->
 
+<!-- Section 3: Other stylings -->
 <style>
 	.background {
 		background-color: rgb(245, 245, 245);
@@ -474,3 +519,4 @@
 		color: transparent;
 	}
 </style>
+<!-- Section 3 ends -->

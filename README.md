@@ -6,7 +6,17 @@ This project aims to prototype a chatbot that simulates a suicidal person seekin
 
 ## How to use it
 
-Enter "pnpm i && pnpm run dev"
+Enter "pnpm i && pnpm run dev" in terminal. It should provide a local host URL. Please paste the URL on a browser.
+The project is also deployed on netlify.
+
+## Major Features
+
+1. Patient Chatbot: User may type in message and press enter to send messages to communicate with a virtual patient.
+2. Feedback Chatbot: User may type in message and click "Get Feedback" to get feedback from a feedback chatbot, based on the chat history and the message in the textfield.
+3. Upload chat history: User may click "Upload Chat History" at any point in a conversation to upload the chat hisotry to a google spreadsheet.
+4. Advice tab
+5. System Prompt tab
+6. Tab buttons: The tabs are by default hidden. User may click on the tabs to expand them.
 
 ## Versions
 
@@ -55,6 +65,22 @@ This version contains a number of major functionality and visual changes to impr
 15. Look into whether start messages is successfully implemented
 16. Add a toggle / accordion sidebar underneath the advice (left-hand) sidebar to show the system prompt and allow users to edit the system prompt.
 
-## How to use it
+### v1.4
+
+This version generally improves responsiveness of the website.
+
+1. Improved responsiveness by utilizing tailwind features.
+2. Optimzed the sequence of content for better mobile experience.
+3. Added (and removed) a feature to switch between prompts.
+4. Solved an issue when auto scrolling down to the bottom as new messages appear doesn't function.
+5. Other visual improvements
+
+### v2.0
+
+This version connects the website to a database.
+
+1. The chat history can be saved through clicking on a "upload chat history" button. The saved chat history contains the system prompt, user messages, and chatbot messages. A timestamp is also recorded in a seperate column.
+
+## Notes
 
 ## Acknowledgements

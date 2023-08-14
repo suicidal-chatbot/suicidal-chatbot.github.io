@@ -16,6 +16,7 @@
 	"devDependencies": {
 		"@playwright/test": "^1.31.2",
 		"@sveltejs/adapter-auto": "^1.0.3",
+		"@sveltejs/adapter-netlify": "^1.0.0-next.88",
 		"@sveltejs/adapter-vercel": "^2.3.0",
 		"@sveltejs/kit": "^1.10.0",
 		"@types/common-tags": "^1.8.1",
@@ -44,11 +45,35 @@
 	"dependencies": {
 		"@types/node": "^20.4.1",
 		"@vercel/postgres": "^0.4.0",
+		"assert": "^2.0.0",
+		"buffer": "^6.0.3",
+		"child_process": "^1.0.2",
+		"crypto": "^1.0.1",
+		"events": "^3.3.0",
+		"fs": "^0.0.1-security",
 		"googleapis": "^121.0.0",
 		"gpt3-tokenizer": "^1.1.5",
 		"https": "^1.0.0",
+		"net": "^1.0.2",
 		"openai": "^3.2.1",
+		"process": "^0.11.10",
+		"querystring": "^0.2.1",
 		"sse.js": "^0.6.1",
-		"ts-node": "^10.9.1"
+		"stream": "^0.0.2",
+		"tls": "^0.0.1",
+		"ts-node": "^10.9.1",
+		"url": "^0.11.1",
+		"util": "^0.12.5",
+		"zlib": "^1.0.5"
+	},
+	"browser": {
+		"fs": false,
+		"path": false,
+		"os": false,
+		"child_process": false,
+		"crypto": false,
+		"https": false,
+		"http2": false,
+		"zlib": false
 	}
 }
