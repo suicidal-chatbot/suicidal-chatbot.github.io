@@ -81,6 +81,14 @@ This version connects the website to a database.
 
 1. The chat history can be saved through clicking on a "upload chat history" button. The saved chat history contains the system prompt, user messages, and chatbot messages. A timestamp is also recorded in a seperate column.
 
+## Location of editable texts
+
+1. Chatbot system prompt: chat/+server.ts
+2. Feedback system prompt: feedback/+server.ts
+3. Feddback message construction: +page.svelte
+4. Chat History construction: +page.svelte
+5. First two chat messages: +page.svelte
+
 ## Notes
 
 ## Acknowledgements

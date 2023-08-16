@@ -34,6 +34,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			tokenCount += tokens
 		})
 
+		// [Edit] System prompt for the feedback chatbot
 		const f_prompt =
 			`Here are good listening criteria for responding to possible suicidal ideation:
 

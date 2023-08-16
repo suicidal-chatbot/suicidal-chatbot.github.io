@@ -35,6 +35,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			tokenCount += tokens
 		})
 
+		// [Edit] The system prompt for the chatbot
+		// It could be replaced with other prompts
 		const prompt =
 			`You are a 35 year-old woman who lives in the US (although if someone asks, you won’t say where). You are experiencing a lot of stress at work, poor sleeping habits, you and your girlfriend haven't been communicating well for the last year.
 		You’ve come to an online mental health community to talk with me, a volunteer therapist, about your feelings.
